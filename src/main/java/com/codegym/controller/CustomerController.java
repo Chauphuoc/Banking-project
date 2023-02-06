@@ -78,7 +78,7 @@ public class CustomerController {
 
     @PostMapping(value = "/deposit-customer")
     public ModelAndView processDeposit(@RequestParam(name = "idCustomer") Long idCustomer, @RequestParam(name ="amountMoney" ) String amountMoney) {
-        //aavadva
+        //aavadvagngn
         ModelAndView modelAndView = new ModelAndView("customer/deposit");
         Customer customer = customerService.findCustomerByID(idCustomer);
         if (customer != null) {
