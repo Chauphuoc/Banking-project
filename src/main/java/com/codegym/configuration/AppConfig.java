@@ -1,9 +1,13 @@
 package com.codegym.configuration;
 
 import com.codegym.repository.CustomerRepositoryImp;
+import com.codegym.repository.DepositRepositoryImp;
 import com.codegym.repository.ICustomerRepository;
+import com.codegym.repository.IDepositRepository;
 import com.codegym.service.CustomerServiceImp;
+import com.codegym.service.DepositServiceImp;
 import com.codegym.service.ICustomerService;
+import com.codegym.service.IDepositService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -19,6 +23,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -54,6 +59,15 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
         return new CustomerServiceImp();
     }
 
+    @Bean
+    public IDepositRepository depositRepository() {
+        return new DepositRepositoryImp();
+    }
+
+    @Bean
+    public IDepositService depositService() {
+        return new DepositServiceImp();
+    }
 
     //Cấu hình Thymeleaf
     @Bean
@@ -65,6 +79,10 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
         templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;
+    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/assets/**").addResourceLocations("/assets/");
     }
 
     @Bean
@@ -94,7 +112,7 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
         em.setDataSource(dataSource());
         em.setPackagesToScan("com.codegym.model");
-
+ 
         JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         em.setJpaVendorAdapter(vendorAdapter);
         em.setJpaProperties(additionalProperties());

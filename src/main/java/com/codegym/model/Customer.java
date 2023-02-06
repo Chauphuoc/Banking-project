@@ -27,8 +27,8 @@ public class Customer {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "balance")
-    private double balance;
+    @Column(name = "balance",columnDefinition = "double default 0.0")
+    private double balance ;
 
     public Customer() {
     }

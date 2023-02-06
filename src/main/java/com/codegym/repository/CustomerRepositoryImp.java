@@ -21,16 +21,24 @@ public class CustomerRepositoryImp implements ICustomerRepository{
 
     @Override
     public Customer findCustomerByID(Long id) {
-        return null;
+        TypedQuery<Customer> query = entityManager.createQuery("SELECT c FROM Customer c WHERE c.id=:id",Customer.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
     @Override
     public void save(Customer customer) {
-
+        if (customer.getId() != null) {
+            entityManager.merge(customer);
+        }
+        else entityManager.persist(customer);
     }
 
     @Override
     public void remove(Long id) {
-
+        Customer customer = findCustomerByID(id);
+        if (customer != null) {
+            entityManager.remove(customer);
+        }
     }
 }

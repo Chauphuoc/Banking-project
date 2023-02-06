@@ -3,9 +3,11 @@ package com.codegym.service;
 import com.codegym.model.Customer;
 import com.codegym.repository.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class CustomerServiceImp implements ICustomerService{
     @Autowired
     private ICustomerRepository customerRepository;
@@ -16,16 +18,16 @@ public class CustomerServiceImp implements ICustomerService{
 
     @Override
     public Customer findCustomerByID(Long id) {
-        return null;
+        return customerRepository.findCustomerByID(id);
     }
 
     @Override
     public void save(Customer customer) {
-
+        customerRepository.save(customer);
     }
 
     @Override
     public void remove(Long id) {
-
+        customerRepository.remove(id);
     }
 }

@@ -1,21 +1,36 @@
 package com.codegym.model;
 
 import javax.persistence.*;
+import javax.xml.crypto.Data;
+import java.util.Date;
 
 @Entity(name = "Deposit")
 @Table(name = "deposits")
 public class Deposit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "transaction_amount")
     private double amount;
 
-    public Deposit(Long id, double amount, Customer customer) {
+    @Column(name = "create")
+    private Date date;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Deposit(Long id, double amount, Customer customer, Date date) {
         this.id = id;
         this.amount = amount;
         this.customer = customer;
+        this.date = date;
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
